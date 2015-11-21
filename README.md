@@ -1,7 +1,12 @@
 # sunsets-today
 A Twitterbot that laments the setting of the sun.
 
-Key things to build:
+### Installation
+- Requires Python3
+- `pip install -r requirements.txt`
+- run it: `python bot.py`
+
+### Key things to build:
 
 - randomly select times to tweet 
 - get the time until sunset based on a configurable location
