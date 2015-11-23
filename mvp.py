@@ -42,32 +42,21 @@ def bullshit():
 	current_time = datetime.datetime.utcnow().replace(tzinfo = pytz.UTC)
 	current_eastern = datetime.datetime.utcnow().replace(tzinfo = pytz.UTC).astimezone(pytz.timezone('America/New_York')).time()
 	utc_sunset = datetime.datetime.strptime(sunset[:-6], '%Y-%m-%dT%H:%M:%S').replace(tzinfo = pytz.UTC)
-	print eastern_sunset_time
-	print current_eastern
-	sun_has_set_delta = datetime.datetime.combine(datetime.date.today(), current_eastern) - datetime.datetime.combine(datetime.date.today(), eastern_sunset_time)
+	sun_has_set_delta = datetime.datetime.combine(datetime.date.today(), eastern_sunset_time) - datetime.datetime.combine(datetime.date.today(), current_eastern)
 	sun_has_set_delta = str(sun_has_set_delta)
 	print sun_has_set_delta
-	ss_hours = sun_has_set_delta[0:2]
-	ss_minutes = sun_has_set_delta[3:5]
-	if ss_hours[1] == ':':
-		ss_hours = ss_hours[0]
-	if ss_minutes[0] == '0':
-		ss_minutes = ss_minutes[1]
+	sun_has_set_delta, fuckoff = str(sun_has_set_delta).split('.')
+	ss_hours, ss_minutes, ss_seconds = sun_has_set_delta.split(':')
+
 	if current_eastern > eastern_sunset_time:
 		sun_has_set = True
 	else:
 		sun_has_set = False
 
 	delta = eastern - current_time
-	delta = str(delta)
-	hours = delta[0:2]
-	minutes = delta[3:5]
-	if hours[1] == ':':
-		hours = hours[0]
-	if minutes[0] == '0':
-		minutes = minutes[1]
-	eastern = str(eastern)
-	eastern_time = eastern[11:-6]
+	delta, fuckoff = str(delta).split('.')
+	hours, minutes, seconds = delta.split(':')
+	eastern_time = str(eastern)[11:-6]
 	eastern_time = datetime.datetime.strptime(eastern_time, "%H:%M:%S")
 	actual_time = eastern_time.strftime("%-I:%M")
 
@@ -95,6 +84,7 @@ def bullshit():
 	else:
 		ss_minutes = ss_minutes+' minutes'
 
+	print sun_has_set
 	return actual_time, hours, minutes, sun_has_set, sun_has_set_delta, ss_minutes, ss_hours
 
 
@@ -122,7 +112,7 @@ while True:
 			"sun goes down at "+actual_time+" today",
 			"sun is going to go down at "+actual_time+", like in "+hours]
 
-			h = ['the sun sets in '+minutes+', at '+actual_time,
+			m = ['the sun sets in '+minutes+', at '+actual_time,
 			"at "+actual_time+", the sun sets ... that's like in "+minutes,
 			"in "+minutes+", the sun is gonna set",
 			"it is gonna be dark in about "+minutes,
