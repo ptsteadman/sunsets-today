@@ -8,11 +8,22 @@ import random
 from time import sleep
 import tweepy
 
-def twitter_api():
-    consumer_key = "LOLOLLOLOLOL"
-    consumer_secret = "LOLOLLOLOLOLLOLOLLOLOLOL"
-    access_token = "LOLOLLOLOLOL-LOLOLLOLOLOL"
-    access_token_secret = "LOLOLLOLOLOL"
+def creds():
+	with open('creds.json') as data_file:
+		data = json.load(data_file)
+		consumer_key = data['creds'][0]['consumer_key']
+		consumer_secret = data['creds'][0]['consumer_secret']
+		access_token = data['creds'][0]['access_token']
+		access_token_secret = data['creds'][0]['access_token_secret']
+		#return consumer_key, consumer_secret
+		return consumer_key, consumer_secret, access_token, access_token_secret
+
+
+def twitter_api(consumer_key, consumer_secret, access_token, access_token_secret):
+    consumer_key = consumer_key
+    consumer_secret = consumer_secret
+    access_token = access_token
+    access_token_secret = access_token_secret
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
     api = tweepy.API(auth)
@@ -54,11 +65,13 @@ def bullshit():
 
 
 
+consumer_key, consumer_secret, access_token, access_token_secret = creds()
 
 while True:
+	consumer_key, consumer_secret, access_token, access_token_secret = creds()
+
 	actual_time, hours, minutes = bullshit()
 
-	p  = ['the sun will set in '+hours+' and '+minutes+', at '+actual_time,
 	'the sun sets '+hours+' and '+minutes+', at '+actual_time,
 	"at "+actual_time+", the sun sets ... that's like in "+hours,
 	"in "+hours+" and "+minutes+", the sun is gonna set",
@@ -74,9 +87,5 @@ while True:
 	t = (random.choice(p))
 	print t
 	api.update_status(status=t)
-	sleep(random.randint(10800,12600))
-
-
-
-
+	sleep(random.randint(7200,7600))
 
