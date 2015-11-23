@@ -44,14 +44,22 @@ def bullshit():
 	utc_sunset = datetime.datetime.strptime(sunset[:-6], '%Y-%m-%dT%H:%M:%S').replace(tzinfo = pytz.UTC)
 	sun_has_set_delta = datetime.datetime.combine(datetime.date.today(), eastern_sunset_time) - datetime.datetime.combine(datetime.date.today(), current_eastern)
 	sun_has_set_delta = str(sun_has_set_delta)
-	print sun_has_set_delta
-	sun_has_set_delta, fuckoff = str(sun_has_set_delta).split('.')
-	ss_hours, ss_minutes, ss_seconds = sun_has_set_delta.split(':')
-
+	print current_eastern
+	print eastern_sunset_time
 	if current_eastern > eastern_sunset_time:
 		sun_has_set = True
+		sun_has_set_delta, fuckoff = str(sun_has_set_delta).split('.')
+		fuckoff, sun_has_set_delta = sun_has_set_delta.split(', ')
+		d_hours, d_minutes, d_seconds = sun_has_set_delta.split(':')
+		ss_hours =  24 - int(d_hours)
+		ss_minutes =  60 - int(d_minutes)
+		ss_hours = str(ss_hours)
+		ss_minutes = str(ss_minutes)
 	else:
 		sun_has_set = False
+		sun_has_set_delta = str(sun_has_set_delta)
+		sun_has_set_delta, fuckoff = str(sun_has_set_delta).split('.')
+		ss_hours, ss_minutes, ss_seconds = sun_has_set_delta.split(':')
 
 	delta = eastern - current_time
 	delta, fuckoff = str(delta).split('.')
@@ -98,6 +106,7 @@ while True:
 	eastern_now = datetime.datetime.utcnow().replace(tzinfo = pytz.UTC).astimezone(pytz.timezone('America/New_York')).time()
 	if eastern_now > on_time and eastern_now < off_time:
 		actual_time, hours, minutes, sun_has_set, sun_has_set_delta, ss_minutes, ss_hours = bullshit()
+		print actual_time, hours, minutes, sun_has_set, sun_has_set_delta, ss_minutes, ss_hours
 		api = twitter_api(consumer_key, consumer_secret, access_token, access_token_secret)
 		if sun_has_set is False:
 			h = ['the sun sets '+hours+' and '+minutes+', at '+actual_time,
@@ -142,6 +151,7 @@ while True:
 				t = (random.choice(m))
 			else:
 				t = (random.choice(h))
+			print t
 			api.update_status(status=t)
 			time.sleep(random.randint(7200,7600))
 
