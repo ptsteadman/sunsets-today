@@ -139,14 +139,14 @@ while True:
 			api.update_status(status=t)
 			time.sleep(random.randint(6200,6900))
 		else:
-			h = ['the sun set at '+actual_time+' which was like '+ss_hours+' ago',
-				'the sun went down today at '+actual_time+', '+ss_hours+' ago',
+			h = ['the sun set at like '+ss_hours+' ago',
+				'the sun went down today at '+ss_hours+' ago',
 				'it got dark outside about '+ss_hours+' ago',
-				'sun went down at '+actual_time+', '+ss_hours+' ago']
-			m = ['the sun set at '+actual_time+'which was like '+ss_minutes+' ago',
-				'the sun went down today at '+actual_time+', '+ss_minutes+' ago',
+				'sun went down '+ss_hours+' ago']
+			m = ['the sun set  '+ss_minutes+' ago',
+				'the sun went down today '+ss_minutes+' ago',
 				'it got dark outside about '+ss_minutes+' ago',
-				'sun went down at '+actual_time+', '+ss_minutes+' ago']
+				'sun went down '+ss_minutes+' ago']
 			if ss_hours == 0:
 				t = (random.choice(m))
 			else:
