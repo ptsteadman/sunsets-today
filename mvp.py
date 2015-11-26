@@ -71,7 +71,7 @@ def bullshit():
 	if hours == '1':
 		hours = hours+' hour'
 	elif hours  == '0':
-		hours = 0
+		hours = 'no'
 	else:
 		hours = hours+' hours'
 
@@ -83,7 +83,7 @@ def bullshit():
 	if ss_hours == '1':
 		ss_hours = ss_hours+' hour'
 	elif ss_hours  == '0':
-		ss_hours = 0
+		ss_hours = 'no'
 	else:
 		ss_hours = ss_hours+' hours'
 
@@ -131,7 +131,7 @@ while True:
 			"in "+minutes+" it is going to start to get dark outside",
 			"sun is going to go down at "+actual_time+", like in "+minutes]
 
-			if hours == 0:
+			if hours == 'no':
 				t = (random.choice(m))
 			else:
 				t = (random.choice(h))
@@ -147,7 +147,7 @@ while True:
 				'the sun went down today '+ss_minutes+' ago',
 				'it got dark outside about '+ss_minutes+' ago',
 				'sun went down '+ss_minutes+' ago']
-			if ss_hours == 0:
+			if ss_hours == 'no':
 				t = (random.choice(m))
 			else:
 				t = (random.choice(h))
